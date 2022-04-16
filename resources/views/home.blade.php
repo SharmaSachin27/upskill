@@ -419,9 +419,24 @@
              {{  "set" }}
          @endisset --}}
          <div class="container">
-            @for ($i = 0; $i < 10; $i++)
+            {{-- @for ($i = 0; $i < 10; $i++)
              <h1>{{ $i }}</h1>
-         @endfor
+            @endfor --}}
+            {{-- @php
+                $i = 1;
+            @endphp
+            @while ($i <= 15)
+                <h2> {{ $i }} </h2>
+                @php
+                    $i++;
+                @endphp
+            @endwhile --}}
+            @php
+                $arr = [1, 2, 3, 4];
+            @endphp
+            @foreach ($arr as $item)
+                {{ $item }}
+            @endforeach
          </div>
     </h1>
 </body>
