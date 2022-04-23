@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -13,6 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/{name}', function ($name = null) {
+//     $data = compact('name');
+//     return view('home')->with($data);
+// });
+
+// Route::get('/{name}/{id}', function ($name, $id) {
+//     $data = compact('name', 'id');
+//     print_r($data);
+//     //return view('welcome');
+// });
+Route::get('home', function () {
+    return view('homes');
+});
+Route::get('about', function () {
+    return view('about');
 });
