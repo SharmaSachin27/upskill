@@ -7,8 +7,9 @@
     <title>Document</title>
 </head>
 <body>
-     <article>
-          
-     </article>
+    <article>
+       <?php echo $post; ?> 
+    </article>
+    <a href="/posts">Go Back</a>
 </body>
 </html>
