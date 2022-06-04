@@ -43,6 +43,12 @@ Route::get('posts', function () {
 Route::get('/admin', function () {
     return view('admin');
 });
+Route::get('/manageCompany', function () {
+    return view('manageCompany');
+});
+Route::get('/viewCompany', function () {
+    return view('viewCompany');
+});
 
 Route::get('posts/{post}', function ($slug) {
     $path = __DIR__ . "/../resources/views/posts/{$slug}.html";
