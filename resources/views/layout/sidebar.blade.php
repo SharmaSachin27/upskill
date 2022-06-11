@@ -26,8 +26,8 @@
                 </a>
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="layout-static.html">Add/Edit Employee</a>
-                        <a class="nav-link" href="layout-sidenav-light.html">View Employee</a>
+                        <a class="nav-link" href="../manageEmployee">Add/Edit Employee</a>
+                        <a class="nav-link" href="../viewEmployee">View Employee</a>
                     </nav>
                 </div>
             </div>

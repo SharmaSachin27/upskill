@@ -1,6 +1,3 @@
-{{-- @include('layout.header')
-<div class="container">@yield('main-section')</div>
-@include('layout.footer') --}}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -31,6 +28,17 @@
         <script src="dist/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="dist/assets/demo/datatables-demo.js"></script>
+        <script>
+            @if (session('status'))
+                swal({
+                    title: '{{ session() }}'',
+                    text: "You clicked the button!",
+                    icon: "success",
+                    button: "Aww yiss!",
+                });
+            @endif
+        </script>
     </body>
 </html>
