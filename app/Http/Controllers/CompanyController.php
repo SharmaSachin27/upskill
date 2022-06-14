@@ -46,7 +46,7 @@ class CompanyController extends Controller
         ]);
         $input = $request->all();
         Company::create($input);
-        return redirect('viewCompany')->with('flash_message', 'Record Addedd Successfully!');
+        return redirect()->route('companies.index')->with('flash_message', 'Record Addedd Successfully!');
     }
 
     /**
@@ -58,6 +58,7 @@ class CompanyController extends Controller
     public function show($id)
     {
         //
+        return redirect()->route('companies.index');
     }
 
     /**
@@ -69,6 +70,8 @@ class CompanyController extends Controller
     public function edit($id)
     {
         //
+        $company = Company::find($id);
+        return  view('manageCompany')->with('company', $company);
     }
 
     /**
@@ -92,5 +95,8 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         //
+        $company = Company::find($id);
+        $company->delete();
+        return redirect()->route('companies.index')->with('flash_message', 'Record Deleted Successfully!');
     }
 }

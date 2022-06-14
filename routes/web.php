@@ -17,32 +17,19 @@ use function PHPUnit\Framework\fileExists;
 |
 */
 
-Route::get('posts', function () {
-    return view('posts');
-});
 Route::get('/admin', function () {
     return view('admin');
 });
 Route::get('/manageCompany', function () {
     return view('manageCompany');
 });
-Route::resource('/viewCompany', CompanyController::class);
-Route::post('/addCompany', [CompanyController::class, 'store']);
+// Route::resource('/viewCompany', CompanyController::class);
+Route::resource('/companies', CompanyController::class);
+
+
 Route::get('/manageEmployee', function () {
     return view('manageEmployee');
 });
 Route::get('/viewEmployee', function () {
     return view('viewEmployee');
-});
-
-Route::get('posts/{post}', function ($slug) {
-    $path = __DIR__ . "/../resources/views/posts/{$slug}.html";
-    if (!file_exists($path)) {
-        //ddd("file does't exist");
-        abort(404);
-    }
-    $post = file_get_contents($path);
-    return view('post', [
-        'post' => $post
-    ]);
 });
