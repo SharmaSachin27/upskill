@@ -42,9 +42,17 @@ class CompanyController extends Controller
         $request->validate([
             'name' =>  'required',
             'email' => 'required',
+            'logo' => 'required',
             'website' => 'required'
         ]);
         $input = $request->all();
+
+        if($request->file('logo')){
+            $file= $request->file('logo');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('company_logos'), $filename);
+        }
+        $input['logo'] = $filename;
         Company::create($input);
         return redirect()->route('companies.index')->with('flash_message', 'Record Addedd Successfully!');
     }
@@ -84,6 +92,22 @@ class CompanyController extends Controller
     public function update(Request $request, $id)
     {
         //
+        return redirect()->route('companiddfff');
+        $company = Company::find($id);
+        $request->validate([
+            'name' =>  'required',
+            'email' => 'required',
+            'website' => 'required'
+        ]);
+        if($request->file('logo')){
+            $file= $request->file('logo');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('company_logos'), $filename);
+        }
+        $company->logo = $filename;
+        $company->save();
+        return redirect()->route('companies.index')->with('flash_message', 'Record Updated Successfully!');
+
     }
 
     /**

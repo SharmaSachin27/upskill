@@ -22,17 +22,19 @@
                             @foreach ($company as $item)
                             <tr>
                                 <td>{{ $item->name }}</td>
-                                <td>{{ $item->logo }}</td>
+                                <td class="text-center">
+                                    <a href="{{ asset('public/company_logos/' . $item->logo) }}" data-fancybox="gallery"><img src="{{ asset('public/company_logos/' . $item->logo) }}" alt="img" height="80px" width="80px" style="border-radius: 50%;"  class="logo-img"></a>
+                                    </td>
                                 <td>{{ $item->email }}</td>
                                 <td>{{ $item->website }}</td>
-                                <td>
+                                <td class="text-center">
                                     <a href="{{ route('companies.edit',$item->id) }}" title="Edit Student"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <form method="POST" action="{{ url('companies', $item->id) }}" accept-charset="UTF-8" style="display:inline">
                                         {{ method_field('DELETE') }}
                                         {{ csrf_field() }}
-                                        <button type="submit" class="btn btn-danger btn-sm" title="Delete Contact" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                                        <button type="submit" class="btn btn-danger btn-sm" id="deleteCompany"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
                                     </form>
                                 </td>
                             </tr>
@@ -43,5 +45,30 @@
             </div>
         </div>
     </div>
+    <script>
+        // $('#deleteCompany').on('click', function() {
+        //     event.preventDefault();
+        //     const url = $(this).attr('href');
+        //     cons
+        //     swal({
+        //         title: "Are you sure?",
+        //         text: "Once deleted, you will not be able to recover this Record!",
+        //         icon: "warning",
+        //         buttons: true,
+        //         dangerMode: true,
+        //         })
+        //         .then((willDelete) => {
+        //         if (willDelete) {
+        //             window.location.href = url;
+        //             swal("Poof! Your Recrod has been deleted!", {
+        //             icon: "success",
+        //             });
+        //         } else {
+        //             swal("Your Record is safe!");
+        //         }
+        //     });
+        // });
+        
+    </script>
 </main>
 @endsection

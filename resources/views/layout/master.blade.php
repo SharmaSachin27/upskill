@@ -10,6 +10,7 @@
         <link href="{{ asset('public/dist/css/styles.css') }}" rel="stylesheet" />
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
     </head>
     <body class="sb-nav-fixed">
         @include('layout.navbar')
@@ -30,15 +31,29 @@
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="{{ asset('public/dist/assets/demo/datatables-demo.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
         <script>
             @if (session('status'))
                 swal({
-                    title: '{{ session() }}'',
+                    title: 'vkkvkbvk',
                     text: "You clicked the button!",
                     icon: "success",
                     button: "Aww yiss!",
                 });
             @endif
+            $(document).ready(() => {
+                $("#logo").change(function () {
+                    const file = this.files[0];
+                    if (file) {
+                        let reader = new FileReader();
+                        reader.onload = function (event) {
+                            $("#preview")
+                              .attr("src", event.target.result);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            })
         </script>
     </body>
 </html>
