@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class CompanyController extends Controller
 {
@@ -42,11 +43,14 @@ class CompanyController extends Controller
         $request->validate([
             'name' =>  'required',
             'email' => 'required',
-            'logo' => 'required',
+            'logo' => 'required|dimensions:min_width=100,min_height=100',
             'website' => 'required'
+        ],
+        [
+            'logo.required' => "you have to choose company logo it required.",
+            'logo.dimensions' => "you have to choose image minimum 100 x 100 dimension."
         ]);
         $input = $request->all();
-
         if($request->file('logo')){
             $file= $request->file('logo');
             $filename= date('YmdHi').$file->getClientOriginalName();
@@ -92,18 +96,28 @@ class CompanyController extends Controller
     public function update(Request $request, $id)
     {
         //
-        return redirect()->route('companiddfff');
         $company = Company::find($id);
         $request->validate([
             'name' =>  'required',
             'email' => 'required',
+            'logo' => 'dimensions:min_width=100,min_height=100',
             'website' => 'required'
+        ],
+        [
+            'logo.dimensions' => "you have to choose image minimum 100 x 100 dimension."
         ]);
-        if($request->file('logo')){
+        $filename = null;
+        if($request->file('logo') !== null){
             $file= $request->file('logo');
             $filename= date('YmdHi').$file->getClientOriginalName();
             $file-> move(public_path('company_logos'), $filename);
+            File::delete(public_path("company_logos/" . $request->oldlogo));
+        } else {
+            $filename = $request->oldlogo;
         }
+        $company->name = $request->name;
+        $company->email = $request->email;
+        $company->website = $request->website;
         $company->logo = $filename;
         $company->save();
         return redirect()->route('companies.index')->with('flash_message', 'Record Updated Successfully!');
@@ -120,6 +134,7 @@ class CompanyController extends Controller
     {
         //
         $company = Company::find($id);
+        File::delete(public_path("company_logos/" . $company->logo));
         $company->delete();
         return redirect()->route('companies.index')->with('flash_message', 'Record Deleted Successfully!');
     }
