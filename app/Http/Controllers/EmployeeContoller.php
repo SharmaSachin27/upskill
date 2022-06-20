@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class EmployeeContoller extends Controller
@@ -13,7 +15,8 @@ class EmployeeContoller extends Controller
      */
     public function index()
     {
-        //
+        $employees = DB::table('employee')->join('company', 'employee.company_id', '=', 'company.id')->select('employee.*', 'company.name')->get();
+        return view('viewEmployee')->with('employees', $employees);
     }
 
     /**
@@ -23,7 +26,6 @@ class EmployeeContoller extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -80,5 +82,8 @@ class EmployeeContoller extends Controller
     public function destroy($id)
     {
         //
+        $employee = Employee::find($id);
+        $employee->delete();
+        return redirect()->route('employees.index')->with('flash_message', 'Record Deleted Successfully!');
     }
 }
