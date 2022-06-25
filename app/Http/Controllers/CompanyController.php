@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
 
 class CompanyController extends Controller
 {
@@ -42,7 +43,7 @@ class CompanyController extends Controller
         //
         $request->validate([
             'name' =>  'required',
-            'email' => 'required',
+            'email' => 'required|unique:company',
             'logo' => 'required|dimensions:min_width=100,min_height=100',
             'website' => 'required'
         ],
@@ -58,7 +59,8 @@ class CompanyController extends Controller
         }
         $input['logo'] = $filename;
         Company::create($input);
-        return redirect()->route('companies.index')->with('flash_message', 'Record Addedd Successfully!');
+        Session::put('statusCode', 'success');
+        return redirect()->route('companies.index')->with('status', 'Record Addedd Successfully!');
     }
 
     /**
@@ -99,7 +101,7 @@ class CompanyController extends Controller
         $company = Company::find($id);
         $request->validate([
             'name' =>  'required',
-            'email' => 'required',
+            'email' => 'required|unique:company,email,' . $id . ',id',
             'logo' => 'dimensions:min_width=100,min_height=100',
             'website' => 'required'
         ],
@@ -120,7 +122,7 @@ class CompanyController extends Controller
         $company->website = $request->website;
         $company->logo = $filename;
         $company->save();
-        return redirect()->route('companies.index')->with('flash_message', 'Record Updated Successfully!');
+        return redirect()->route('companies.index')->with('status', 'Record Updated Successfully!');
 
     }
 
@@ -136,6 +138,7 @@ class CompanyController extends Controller
         $company = Company::find($id);
         File::delete(public_path("company_logos/" . $company->logo));
         $company->delete();
-        return redirect()->route('companies.index')->with('flash_message', 'Record Deleted Successfully!');
+        Session::put('statusCode', 'success');
+        return redirect()->route('companies.index')->with('status', 'Record Deleted Successfully!');
     }
 }

@@ -25,18 +25,25 @@
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" name="email" id="email" class="form-control" placeholder="www.abc.com" value="{{ $employee->email ?? '' }}">
-                        <span class="text-danger">@error('website') {{ $message }} @enderror</span>
+                        <input type="email" name="email" id="email" class="form-control" placeholder="abc@gmail.com" value="{{ $employee->email ?? '' }}">
+                        <span class="text-danger">@error('email') {{ $message }} @enderror</span>
                     </div>
                     <div class="form-group">
-                        <label>Company</label>
-                        <select class="browser-default custom-select" name="company" id="company">
-                            <option selected>Select company</option>
-                            @foreach ($company as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                        <span class="text-danger">@error('company') {{ $message }} @enderror</span>
+                        <div class="row">
+                            <label class="col-sm-1">Company</label>
+                            <select class="form-control col-md-3" name="company_id" id="company_id">
+                                <option value="">Select company</option>
+                                @foreach ($company as $item)
+                                    @isset($employee)
+                                        <option value="{{ $item->id }}" {{ $item->id == $employee->company_id ? 'selected' : '' }}>{{ $item->name }}</option>    
+                                    @else
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>    
+                                    
+                                    @endisset
+                                @endforeach
+                            </select>
+                        </div>
+                        <span class="text-danger">@error('company_id') {{ $message }} @enderror</span>
                     </div>
                     <input type="submit" value="Save" class="btn btn-success">
             </div>

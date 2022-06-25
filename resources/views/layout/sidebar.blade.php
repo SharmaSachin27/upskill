@@ -3,7 +3,7 @@
         <div class="sb-sidenav-menu">
             <div class="nav">
                 <div class="sb-sidenav-menu-heading">Core</div>
-                <a class="nav-link" href="../admin">
+                <a class="nav-link" href="{{ url('admin') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
                 </a>
@@ -16,7 +16,7 @@
                 </a>
                 <div class="collapse" id="collapseCompany" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="../manageCompany">Add/Edit Company</a>
+                        <a class="nav-link" href="{{ url('manageCompany') }}">Add/Edit Company</a>
                         <a class="nav-link" href="{{ url('companies') }}">View Company</a>
                     </nav>
                 </div>
@@ -27,8 +27,8 @@
                 </a>
                 <div class="collapse" id="collapseEmployee" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="../manageEmployee">Add/Edit Employee</a>
-                        <a class="nav-link" href="../viewEmployee">View Employee</a>
+                        <a class="nav-link" href="{{ route('employees.create') }}">Add/Edit Employee</a>
+                        <a class="nav-link" href="{{ url('employees') }}">View Employee</a>
                     </nav>
                 </div>
             </div>

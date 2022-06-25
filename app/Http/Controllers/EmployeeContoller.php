@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmployeeRequest;
 use App\Models\Employee;
-use Illuminate\Support\Facades\DB;
+use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class EmployeeContoller extends Controller
 {
@@ -15,7 +17,8 @@ class EmployeeContoller extends Controller
      */
     public function index()
     {
-        $employees = DB::table('employee')->join('company', 'employee.company_id', '=', 'company.id')->select('employee.*', 'company.name')->get();
+        $employees = Employee::join('company', 'employee.company_id', '=', 'company.id')->select('employee.*', 'company.name')->get();
+        //$employees = Employee::with('getCompany')->get();
         return view('viewEmployee')->with('employees', $employees);
     }
 
@@ -26,6 +29,8 @@ class EmployeeContoller extends Controller
      */
     public function create()
     {
+        $company = Company::all();
+        return view('manageEmployee')->with('company', $company);
     }
 
     /**
@@ -37,6 +42,16 @@ class EmployeeContoller extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'firstname' =>  'required',
+            'lastname' => 'required',
+            'email' => 'required|unique:employee',
+            'company_id' => 'required'
+        ]);
+        $input = $request->all();
+        Employee::create($input);
+        Session::put('statusCode', 'success');
+        return redirect()->route('employees.index')->with('status', 'Record Addedd Successfully!');
     }
 
     /**
@@ -59,6 +74,9 @@ class EmployeeContoller extends Controller
     public function edit($id)
     {
         //
+        $employee = Employee::find($id);
+        $company = Company::all();
+        return view('manageEmployee')->with(['employee' => $employee, 'company' => $company]);
     }
 
     /**
@@ -71,6 +89,20 @@ class EmployeeContoller extends Controller
     public function update(Request $request, $id)
     {
         //
+        $employee = Employee::find($id);
+        $request->validate([
+            'firstname' =>  'required',
+            'lastname' => 'required',
+            'email' => 'required|unique:employee,email,' . $id . ',id',
+            'company_id' => 'required'
+        ]);
+        $employee->firstname = $request->firstname;
+        $employee->lastname = $request->lastname;
+        $employee->email = $request->email;
+        $employee->company_id = $request->company_id;
+        $employee->save();
+        Session::put('statusCode', 'success');
+        return redirect()->route('employees.index')->with('status', 'Record Addedd Successfully!');
     }
 
     /**
@@ -84,6 +116,7 @@ class EmployeeContoller extends Controller
         //
         $employee = Employee::find($id);
         $employee->delete();
-        return redirect()->route('employees.index')->with('flash_message', 'Record Deleted Successfully!');
+        Session::put('statusCode', 'success');
+        return redirect()->route('employees.index')->with('status', 'Record Deleted Successfully!');
     }
 }

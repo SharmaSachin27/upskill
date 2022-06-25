@@ -35,10 +35,10 @@
         <script>
             @if (session('status'))
                 swal({
-                    title: 'vkkvkbvk',
-                    text: "You clicked the button!",
+                    title: '{{ session('statusCode') }} ',
+                    text: '{{ session('status') }}',
                     icon: "success",
-                    button: "Aww yiss!",
+                    button: "okay",
                 });
             @endif
             $(document).ready(() => {
@@ -53,7 +53,7 @@
                         reader.readAsDataURL(file);
                     }
                 });
-            })
+            });
         </script>
     </body>
 </html>
