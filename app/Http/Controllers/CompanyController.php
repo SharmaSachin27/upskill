@@ -55,7 +55,7 @@ class CompanyController extends Controller
         if($request->file('logo')){
             $file= $request->file('logo');
             $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('company_logos'), $filename);
+            $file-> move(storage_path('app/public/company_logos'), $filename);
         }
         $input['logo'] = $filename;
         Company::create($input);
