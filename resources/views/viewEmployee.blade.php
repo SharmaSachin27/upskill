@@ -5,8 +5,10 @@
     <div class="container-fluid">
         <h1 class="mt-4">Manage Employee</h1>
         <div class="row">
-            <div class="add-btn col-md-12">
-                <a href="{{ url('manageCompanay') }}"><button class="btn btn-dark pull-right">ADD <i class="fa fa-plus"></i></button></a>
+            <div class="add-btn col-md-11">
+            </div>
+            <div class="add-btn col-md-1">
+                <a href="{{ route('employees.create') }}"><button class="btn btn-dark pull-right">ADD <i class="fa fa-plus"></i></button></a>    
             </div>
         </div>
         <div class="card mb-4 mt-3">

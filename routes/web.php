@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EmployeeContoller;
+use App\Http\Controllers\AdminDashboardController;
 use Illuminate\Contracts\Cache\Store;
 
 use Illuminate\Support\Facades\Auth;
@@ -25,20 +26,11 @@ use function PHPUnit\Framework\fileExists;
 
 Auth::routes();
 Route::group(['middleware' => ['auth']], function() {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::get('/admin', function () {
-        return view('admin');
-    })->middleware('auth');
-    Route::get('/manageCompany', function () {
-        return view('manageCompany');
-    });
-    // Route::resource('/viewCompany', CompanyController::class);
+    Route::get('/admin', [AdminDashboardController::class, 'dashboardData']);
     Route::resource('/companies', CompanyController::class);
     Route::resource('/employees', EmployeeContoller::class);
-
-
-    Route::get('/manageEmployee', function () {
-        return view('manageEmployee');
-    });
+    // Route::get('/manageEmployee', function () {
+    //     return view('manageEmployee');
+    // });
     Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 });

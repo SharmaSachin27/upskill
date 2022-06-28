@@ -16,7 +16,6 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
         $company = Company::all();
         return view('viewCompany')->with('company', $company);
     }
@@ -28,7 +27,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('/manageCompany');
 
     }
 
@@ -40,7 +39,6 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $request->validate([
             'name' =>  'required',
             'email' => 'required|unique:company',
@@ -55,7 +53,7 @@ class CompanyController extends Controller
         if($request->file('logo')){
             $file= $request->file('logo');
             $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(storage_path('app/public/company_logos'), $filename);
+            $file-> move(storage_path('app/public/company_logos/'), $filename);
         }
         $input['logo'] = $filename;
         Company::create($input);
@@ -71,7 +69,6 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        //
         return redirect()->route('companies.index');
     }
 
@@ -83,7 +80,6 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        //
         $company = Company::find($id);
         return  view('manageCompany')->with('company', $company);
     }
@@ -97,7 +93,6 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
         $company = Company::find($id);
         $request->validate([
             'name' =>  'required',
@@ -112,8 +107,8 @@ class CompanyController extends Controller
         if($request->file('logo') !== null){
             $file= $request->file('logo');
             $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('company_logos'), $filename);
-            File::delete(public_path("company_logos/" . $request->oldlogo));
+            $file-> move(storage_path('app/public/company_logos/'), $filename);
+            File::delete(storage_path('app/public/company_logos/' . $request->oldlogo));
         } else {
             $filename = $request->oldlogo;
         }
@@ -134,9 +129,8 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        //
         $company = Company::find($id);
-        File::delete(public_path("company_logos/" . $company->logo));
+        File::delete(storage_path('app/public/company_logos/' . $company->logo));
         $company->delete();
         Session::put('statusCode', 'success');
         return redirect()->route('companies.index')->with('status', 'Record Deleted Successfully!');

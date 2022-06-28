@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EmployeeRequest;
+use App\Mail\NotifyMail;
 use App\Models\Employee;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class EmployeeContoller extends Controller
@@ -50,6 +52,7 @@ class EmployeeContoller extends Controller
         ]);
         $input = $request->all();
         Employee::create($input);
+        Mail::to($input['email'])->send(new NotifyMail($input['firstname']));
         Session::put('statusCode', 'success');
         return redirect()->route('employees.index')->with('status', 'Record Addedd Successfully!');
     }
@@ -102,7 +105,7 @@ class EmployeeContoller extends Controller
         $employee->company_id = $request->company_id;
         $employee->save();
         Session::put('statusCode', 'success');
-        return redirect()->route('employees.index')->with('status', 'Record Addedd Successfully!');
+        return redirect()->route('employees.index')->with('status', 'Record Updated Successfully!');
     }
 
     /**
@@ -113,7 +116,6 @@ class EmployeeContoller extends Controller
      */
     public function destroy($id)
     {
-        //
         $employee = Employee::find($id);
         $employee->delete();
         Session::put('statusCode', 'success');

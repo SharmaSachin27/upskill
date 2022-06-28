@@ -54,6 +54,29 @@
                     }
                 });
             });
+            // $(document).ready(function () {
+            //     $('.delete').submit(function (e) {
+            //     e.preventDefault();
+            //     var form = $(this);
+            //     swal({
+            //         title: "Are you sure?",
+            //         text: "Once deleted, you will not be able to recover this Record!",
+            //         icon: "warning",
+            //         buttons: true,
+            //         dangerMode: true,
+            //         })
+            //         .then((willDelete) => {
+            //         if (willDelete) {
+            //             form.submit();
+            //             swal("Poof! Your Recrod has been deleted!", {
+            //             icon: "success",
+            //             });
+            //         } else {
+            //             swal("Your Record is safe!");
+            //         }
+            //     });
+            // }); 
+            // });
         </script>
     </body>
 </html>

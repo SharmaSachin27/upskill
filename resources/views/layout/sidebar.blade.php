@@ -16,7 +16,7 @@
                 </a>
                 <div class="collapse" id="collapseCompany" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{{ url('manageCompany') }}">Add/Edit Company</a>
+                        <a class="nav-link" href="{{ route('companies.create') }}">Add/Edit Company</a>
                         <a class="nav-link" href="{{ url('companies') }}">View Company</a>
                     </nav>
                 </div>
